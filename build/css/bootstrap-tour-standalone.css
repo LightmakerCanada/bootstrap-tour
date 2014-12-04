@@ -688,7 +688,6 @@ input[type="button"].btn-block {
 .tour-step-backdrop {
   position: relative;
   z-index: 1101;
-  background: inherit;
 }
 .tour-step-backdrop > td {
   position: relative;
