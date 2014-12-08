@@ -601,12 +601,14 @@
 
       @backdrop.overlayElementShown = true
       @backdrop.$element = $element.addClass 'tour-step-backdrop'
+      @backdrop.$foreground = $ '<div>', class: 'tour-foreground'
       @backdrop.$background = $ '<div>', class: 'tour-step-background'
       elementData =
         width: $element.innerWidth()
         height: $element.innerHeight()
         offset: $element.offset()
 
+      @backdrop.$foreground.appendTo('body')
       @backdrop.$background.appendTo('body')
 
       elementData = @_applyBackdropPadding step.backdropPadding, elementData if step.backdropPadding
@@ -620,8 +622,10 @@
       return unless @backdrop.overlayElementShown
 
       @backdrop.$element.removeClass 'tour-step-backdrop'
+      @backdrop.$foreground.remove()
       @backdrop.$background.remove()
       @backdrop.$element = null
+      @backdrop.$foreground = null
       @backdrop.$background = null
       @backdrop.overlayElementShown = false
 

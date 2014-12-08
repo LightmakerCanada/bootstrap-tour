@@ -1306,6 +1306,9 @@
       }
       this.backdrop.overlayElementShown = true;
       this.backdrop.$element = $element.addClass('tour-step-backdrop');
+      this.backdrop.$foreground = $('<div>', {
+        "class": 'tour-foreground'
+      });
       this.backdrop.$background = $('<div>', {
         "class": 'tour-step-background'
       });
@@ -1314,6 +1317,7 @@
         height: $element.innerHeight(),
         offset: $element.offset()
       };
+      this.backdrop.$foreground.appendTo('body');
       this.backdrop.$background.appendTo('body');
       if (step.backdropPadding) {
         elementData = this._applyBackdropPadding(step.backdropPadding, elementData);
@@ -1326,8 +1330,10 @@
         return;
       }
       this.backdrop.$element.removeClass('tour-step-backdrop');
+      this.backdrop.$foreground.remove();
       this.backdrop.$background.remove();
       this.backdrop.$element = null;
+      this.backdrop.$foreground = null;
       this.backdrop.$background = null;
       return this.backdrop.overlayElementShown = false;
     };
