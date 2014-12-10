@@ -519,19 +519,25 @@
         clearTimeout(timeout)
         timeout = setTimeout(callback, 100)
 
+    # Remove event bindings for mouse navigation
+    _removeMouseNavigation: ->
+      $(document)
+      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='prev']")
+      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='next']")
+      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='end']")
+      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='pause-resume']")
+
     # Event bindings for mouse navigation
     _initMouseNavigation: ->
       _this = @
+
+      @_removeMouseNavigation()
 
       # Go to next step after click on element with attribute 'data-role=next'
       # Go to previous step after click on element with attribute 'data-role=prev'
       # End tour after click on element with attribute 'data-role=end'
       # Pause/resume tour after click on element with attribute 'data-role=pause-resume'
       $(document)
-      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='prev']")
-      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='next']")
-      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='end']")
-      .off("click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='pause-resume']")
       .on "click.tour-#{@_options.name}", ".popover.tour-#{@_options.name} *[data-role='next']", (e) =>
         e.preventDefault()
         @next()
