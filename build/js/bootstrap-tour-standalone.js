@@ -1296,8 +1296,11 @@
     };
 
     Tour.prototype._hideBackground = function() {
+      var _base;
       if (this.backdrop) {
-        this.backdrop.remove();
+        if (typeof (_base = this.backdrop).remove === "function") {
+          _base.remove();
+        }
         this.backdrop.overlay = null;
         return this.backdrop.backgroundShown = false;
       }
