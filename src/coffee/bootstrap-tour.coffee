@@ -465,6 +465,7 @@
       offsetHeight = $tip[0].offsetHeight
 
       tipOffset = $tip.offset()
+      tipOffset = @_adjustForPadding(tipOffset, step)
       originalLeft = tipOffset.left
       originalTop = tipOffset.top
       offsetBottom = $(document).outerHeight() - tipOffset.top - $tip.outerHeight()
@@ -484,6 +485,30 @@
       else
         if originalTop isnt tipOffset.top
           @_replaceArrow $tip, (tipOffset.top - originalTop) * 2, offsetHeight, 'top'
+
+    # Adjusts the position of the popover by the amount of the backdrop padding.
+    _adjustForPadding: (offset, step) ->
+      return offset unless padding = step.backdropPadding
+
+      if typeof padding is 'object'
+        padding.top ?= 0
+        padding.right ?= 0
+        padding.bottom ?= 0
+        padding.left ?= 0
+      else
+        padding =
+          top    : padding
+          right  : padding
+          bottom : padding
+          left   : padding
+
+      switch step.placement
+        when 'top' then offset.top -= padding.top
+        when 'bottom' then offset.top += padding.bottom
+        when 'left' then offset.left -= padding.left
+        when 'right' then offset.left += padding.right
+
+      offset
 
     # Center popover in the page
     _center: ($tip) ->

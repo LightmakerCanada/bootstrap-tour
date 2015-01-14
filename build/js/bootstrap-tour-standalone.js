@@ -1125,6 +1125,7 @@
       offsetWidth = $tip[0].offsetWidth;
       offsetHeight = $tip[0].offsetHeight;
       tipOffset = $tip.offset();
+      tipOffset = this._adjustForPadding(tipOffset, step);
       originalLeft = tipOffset.left;
       originalTop = tipOffset.top;
       offsetBottom = $(document).outerHeight() - tipOffset.top - $tip.outerHeight();
@@ -1151,6 +1152,48 @@
           return this._replaceArrow($tip, (tipOffset.top - originalTop) * 2, offsetHeight, 'top');
         }
       }
+    };
+
+    Tour.prototype._adjustForPadding = function(offset, step) {
+      var padding;
+      if (!(padding = step.backdropPadding)) {
+        return offset;
+      }
+      if (typeof padding === 'object') {
+        if (padding.top == null) {
+          padding.top = 0;
+        }
+        if (padding.right == null) {
+          padding.right = 0;
+        }
+        if (padding.bottom == null) {
+          padding.bottom = 0;
+        }
+        if (padding.left == null) {
+          padding.left = 0;
+        }
+      } else {
+        padding = {
+          top: padding,
+          right: padding,
+          bottom: padding,
+          left: padding
+        };
+      }
+      switch (step.placement) {
+        case 'top':
+          offset.top -= padding.top;
+          break;
+        case 'bottom':
+          offset.top += padding.bottom;
+          break;
+        case 'left':
+          offset.left -= padding.left;
+          break;
+        case 'right':
+          offset.left += padding.right;
+      }
+      return offset;
     };
 
     Tour.prototype._center = function($tip) {
