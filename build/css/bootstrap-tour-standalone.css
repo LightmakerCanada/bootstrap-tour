@@ -697,7 +697,7 @@ input[type="button"].btn-block {
 }
 .tour-step-backdrop {
   position: relative;
-  z-index: 1101;
+  z-index: 1101 !important;
 }
 .tour-step-backdrop > td {
   position: relative;
