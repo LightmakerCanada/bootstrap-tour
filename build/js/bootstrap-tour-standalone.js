@@ -612,6 +612,7 @@
         debug: false,
         backdrop: false,
         backdropPadding: 0,
+        backgroundColor: '',
         redirect: true,
         orphan: false,
         duration: false,
@@ -1327,6 +1328,9 @@
       };
       this.backdrop.$foreground.appendTo('body');
       this.backdrop.$background.appendTo('body');
+      if (step.backgroundColor) {
+        this.backdrop.$background.css('background-color', step.backgroundColor);
+      }
       if (step.backdropPadding) {
         elementData = this._applyBackdropPadding(step.backdropPadding, elementData);
       }

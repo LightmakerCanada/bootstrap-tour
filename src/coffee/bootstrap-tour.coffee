@@ -18,6 +18,7 @@
         debug: false
         backdrop: false
         backdropPadding: 0
+        backgroundColor: ''
         redirect: true
         orphan: false
         duration: false
@@ -616,6 +617,9 @@
 
       @backdrop.$foreground.appendTo('body')
       @backdrop.$background.appendTo('body')
+
+      if step.backgroundColor
+        @backdrop.$background.css 'background-color', step.backgroundColor
 
       elementData = @_applyBackdropPadding step.backdropPadding, elementData if step.backdropPadding
       @backdrop
