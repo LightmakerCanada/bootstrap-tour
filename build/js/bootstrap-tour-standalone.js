@@ -1072,6 +1072,7 @@
           };
         })(this));
       }
+      this._cleanUpOldPopover($element);
       $element.popover({
         placement: step.placement,
         trigger: 'manual',
@@ -1088,6 +1089,22 @@
       if (isOrphan) {
         return this._center($tip);
       }
+    };
+
+    Tour.prototype._cleanUpOldPopover = function($element) {
+      var $popover, _ref, _ref1;
+      $popover = $element.data('bs.popover') || $element.data('popover');
+      if (!$popover) {
+        return;
+      }
+      if ((_ref = $popover.tip()) != null) {
+        _ref.detach();
+      }
+      if ((_ref1 = $popover.$element) != null) {
+        _ref1.removeAttr('aria-describedby');
+      }
+      $element.data('bs.popover', null);
+      return $element.data('popover', null);
     };
 
     Tour.prototype._template = function(step, i) {

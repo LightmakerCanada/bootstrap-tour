@@ -422,6 +422,8 @@
         $element.on "#{@_reflexEvent(step.reflex)}.tour-#{@_options.name}", =>
           if @_isLast() then @next() else @end()
 
+      @_cleanUpOldPopover $element
+
       $element
       .popover(
         placement: step.placement
@@ -441,6 +443,15 @@
       $tip.attr 'id', step.id
       @_reposition $tip, step
       @_center $tip if isOrphan
+
+    # Remove any existing popovers on the element
+    _cleanUpOldPopover: ($element) ->
+      $popover = $element.data('bs.popover') or $element.data('popover')
+      return unless $popover
+      $popover.tip()?.detach()
+      $popover.$element?.removeAttr 'aria-describedby'
+      $element.data 'bs.popover', null
+      $element.data 'popover', null
 
     # Get popover template
     _template: (step, i) ->
