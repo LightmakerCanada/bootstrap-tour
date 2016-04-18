@@ -559,7 +559,11 @@
         animation: step.animation,
         container: step.container,
         template: step.template,
-        selector: step.element
+        selector: step.element,
+        viewport: {
+          selector: step.container,
+          padding: 20
+        }
       }).popover('show');
       $tip = $element.data('bs.popover') ? $element.data('bs.popover').tip() : $element.data('popover').tip();
       $tip.attr('id', step.id);
